@@ -39,8 +39,8 @@ const validUser = atob("ZGV2QHRlaWF4LmNvbQ==");
 /**
  * Função para realizar login com username e password
  *
- * @param {string} username Usuário
- * @param {string} password Senha
+ * @param {string} username Usuário = dev@teiax.com
+ * @param {string} password Senha = 123456
  *
  * Verifica credenciais com as constantes validUser e validPassword,
  *   e se forem válidas, armazena um token de autenticação no localStorage

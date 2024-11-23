@@ -1,7 +1,11 @@
-// script.js
+
 let blockedRequests = 0; // Nova variável para contar requisições bloqueadas
 let totalTraffic = 0; // Nova variável para armazenar o total de tráfego
 
+/**
+ * Fun o que atualiza o grafico de frequencia de ataques
+ * @param {Array.<Object>} logs - Vetor de logs de ataques
+ */
 document.addEventListener("DOMContentLoaded", () => {
     const ctxAttack = document.getElementById("attackChart").getContext("2d");
     const ctxTraffic = document.getElementById("trafficChart").getContext("2d");
@@ -49,6 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const ipFilter = document.getElementById('ipFilter');
     const filterButton = document.getElementById('filterButton');
 
+
+    /**
+     * Verifica se o IP fornecido possui o formato correto
+     * @param {string} ip - O IP a ser verificado
+     * @returns {boolean} - Verdadeiro se o IP for valido, falso caso contrrio
+     * 
+     */
+
     ipFilter.addEventListener('input', () => {
       const filterValue = ipFilter.value;
       if (isValidIPFormat(filterValue)) {
@@ -59,6 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         populateLogsTable(globalLogs);
       }
     });
+
+      /**
+       * verifca se a tabela estiver vazia e exibe uma mensagem de alerta
+       *  @param {Array.<Object>} logs - Vetor de logs de ataques
+       *                                                       
+       */
 
     filterButton.addEventListener('click', () => {
       if (globalLogs.length === 0) {
@@ -73,7 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Adiciona o evento de clique para buscar logs
+    /**
+     * Adiciona um event listener para o botão de refresh
+     * 
+     */
     const refreshButton = document.querySelector('.refresh-button');
     if (refreshButton) {
         refreshButton.addEventListener('click', fetchDDoSLogs);
@@ -83,7 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
     populateLogsTable([]);
 });
 
-// Função para formatar a data
+
+
+/**
+ * Formata uma string de data/hora para o formato DD/MM/YYYY HH:mm:ss
+ * @param {string} dateString - String de data/hora no formato ISO
+ * @returns {string} - String de data/hora formatada
+ */
 function formatDate(dateString) {
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, '0');
@@ -95,14 +122,31 @@ function formatDate(dateString) {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
-// Função para validar o formato do IP
+
+
+/**
+ * Verifica se o IP fornecido possui o formato correto
+ * @param {string} ip - O IP a ser verificado
+ * @returns {boolean} - Verdadeiro se o IP for valido, falso caso contr rio
+ * 
+ * O formato de IP permitido   000.000.000.00, onde cada parte pode ter
+ * at   3 d gitos. O IP n o pode terminar com ponto.
+ */
 function isValidIPFormat(ip) {
   // Permite dígitos e pontos, mas não termina com ponto
   const ipPattern = /^(\d{1,3}\.){0,3}\d{1,3}(\.)?$/;
   return ipPattern.test(ip);
 }
 
-// Função para filtrar os logs
+
+
+/**
+ * Filtra um array de logs com base em um prefixo de endere o IP fornecido.
+ *
+ * @param {Array.<Object>} logs - Array de objetos de log a serem filtrados.
+ * @param {string} filterValue - O prefixo de endere o IP a ser usado para filtrar logs.
+ * @returns {Array.<Object>} - Um novo array contendo logs com endere os IPV4 que comecam com o filterValue.
+ */
 function filterLogs(logs, filterValue) {
   return logs.filter(log => log['IPV4'].startsWith(filterValue));
 }
@@ -110,7 +154,30 @@ function filterLogs(logs, filterValue) {
 // Variável global para armazenar os logs
 let globalLogs = [];
 
-// Função para buscar dados de ataque DDoS da API
+
+
+/**
+ * Realiza uma requisi o à API para buscar logs de DDoS e preenche a tabela
+ * com os resultados.
+ *
+ * A requisicão   feita para a URL http://localhost:4444/logs,
+ * que espera que a API retorne um array de objetos no formato:
+ *
+ * {
+ *   "IPV4": string,
+ *   "Date/Time": string,
+ *   "Method": string,
+ *   "URL": string,
+ *   "User Agent": string,
+ *   "country": string,
+ *   "WAF": string,
+ *   "Traffic": number,
+ *   "SIZE": number
+ * }
+ *
+ * Caso a requisi o seja bem-sucedida, a tabela ser  preenchida com os
+ * resultados. Caso contrario, uma mensagem de erro ser  exibida.
+ */
 async function fetchDDoSLogs() {
   try {
       // Desativa o botão durante a requisição para evitar múltiplos cliques
@@ -147,7 +214,24 @@ async function fetchDDoSLogs() {
   }
 }
 
-// Função para popular a tabela de logs
+
+
+/**
+ * Popula a tabela de logs com logs de DDoS filtrados ou n o.
+ * 
+ 
+ * Essa fun o cria dinamicamente uma tabela HTML e preenche com dados de log.
+ * Se n o houver logs dispon veis, exibe uma mensagem inicial. Filtra os logs
+ * com base em um prefixo de endere o IP fornecido e limita a exibicao par
+ * melhorar o desempenho. Alem disso, atualiza as estatisticas de trafego total
+ * e requisices bloqueadas.
+ *
+ * @param {Array.<Object>} logs - Array de objetos de log a serem exibidos na
+ *   tabela.
+ * @param {string} [filter=''] - Prefixo de endere o IP opcional para filtrar os
+ *   logs.
+ *
+ */
 function populateLogsTable(logs, filter = '') {
   // Seleciona o elemento da tabela
   const tableSection = document.querySelector('.table-section');
@@ -222,7 +306,6 @@ function populateLogsTable(logs, filter = '') {
 
     
   
-// ... (previous code remains unchanged)
 
 // Adiciona o total de tráfego
 const totalTrafficElement = document.querySelector('.total-traffic');
@@ -243,6 +326,11 @@ return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 
 
 
+/**
+ * Formata um numero com separadores de milhar em , (ponto e virgula)
+ * @param {number} num - Numero a ser formatado
+ * @returns {string} - Numero formatado
+ */
   function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -255,7 +343,7 @@ return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   //mostra o total de requisicoes bloqueadas
   const totalBlockedRequestsElement = document.querySelector('.blocked-requests');
 
-  totalBlockedRequestsElement.textContent = formatNumber(blockedRequests ); // Formata o valor como moeda brasileira com ponto e virgulablockedRequests;
+  totalBlockedRequestsElement.textContent = formatNumber(blockedRequests ); // Formata o valor como moeda brasileira com ponto e virgula blockedRequests;
 
   console.log(blockedRequests);
 
@@ -271,7 +359,13 @@ return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   logCount.style.fontSize = '0.9em';
   tableSection.appendChild(logCount);
 }
-//precisamos somar todos os ZISES para calcular o total de bytes
+
+/**
+ * Calcula o total de bytes dos logs fornecidos.
+ *
+ * @param {Array.<Object>} logs - Array de objetos de log, cada um com uma propriedade 'SIZE'.
+ * @returns {number} - O total de bytes somados a partir da propriedade 'SIZE' de cada log.
+ */
 function calculateTotalBytes(logs) {
   return logs.reduce((total, log) => total + log['SIZE'], 0);
 
