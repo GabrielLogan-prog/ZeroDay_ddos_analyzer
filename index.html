@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DDoS Protection</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            background-color: #f0f2f5;
+            background-image: url('img/background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+           
+        }
+        .login-container {
+           
+            padding: 30px;
+            /*border-radius: 8px;*/
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+            color: aqua;
+        }
+        .login-container input {
+            width: 280px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .login-container button {
+            width: 302px;
+            padding: 10px;
+            background-color: #1c1c2e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #2b2b3d;
+        }
+         /* Estilo do texto com animação blink */
+  
+    </style>
+</head>
+<body style="background-size: cover; background-position: center;">
+    <div class="login-container">
+        <h2>Login - DDoS Protection</h2>
+        <form id="login-form">
+            <input 
+                type="text" 
+                id="username" 
+                placeholder="Usuário" 
+                required
+            >
+            <input 
+                type="password" 
+                id="password" 
+                placeholder="Senha" 
+                required
+            >
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        window.onload = function() {
+          // Tenta resetar o zoom
+          document.body.style.zoom = 1.0;
+          
+          // Para navegadores que não suportam zoom via CSS
+          if (window.devicePixelRatio !== 1) {
+            var body = document.getElementsByTagName('body')[0];
+            body.style.webkitTransform = 'scale(1)';
+            body.style.mozTransform = 'scale(1)';
+            body.style.msTransform = 'scale(1)';
+            body.style.oTransform = 'scale(1)';
+            body.style.transform = 'scale(1)';
+          }
+        }
+      </script>
+    
+</body>
+</html>
