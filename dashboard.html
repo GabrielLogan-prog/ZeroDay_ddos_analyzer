@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDoS Log Analyzer Dashboard</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="img/favicon-32x32.png">
+  <title>Texto Brilhante</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Menu Lateral -->
+    <aside class="sidebar">
+      <h2>DDoS Log Analyzer</h2>
+      <nav>
+        <ul>
+          <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="#"class="disabled"><i class="fas fa-chart-line"></i> Analytics</a></li>
+          <li><a href="#" class="disabled"><i class="fas fa-bell"></i> Alerts</a></li>
+          <li><a href="#"class="disabled"><i class="fas fa-shield-alt"></i> Protection</a></li>
+          <li><a href="#" class="disabled"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </aside>
+
+    <!-- Painel Principal -->
+    <main class="dashboard">
+      <header>
+      
+      </header>
+      <section class="stats">
+        <div class="card">
+          <i class="fas fa-users"></i>
+          <h3 class="total-attacks">-,---</h3>
+          <p>Total Attacks</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-shield-alt"></i>
+          <h3 class="total-traffic">-,---</h3>
+          <p>Total Traffic</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-lock"></i>
+          <h3 class="blocked-requests">-,---</h3>
+          <p>Blocked Requests</p>
+        </div>
+        <div class="chart" id="attackFrequency">
+          <h3>Attack Frequency</h3>
+          <canvas id="attackChart"></canvas>
+        </div>
+        <div class="chart" id="trafficOverview">
+          <h3>Traffic Overview</h3>
+          <canvas id="trafficChart"></canvas>
+      </div>
+      </section>
+    
+       <!-- Filter Section -->
+       <section class="filter-section">
+        <div class="filter-container">
+            <input type="text" id="ipFilter" placeholder="Enter IP Address" />
+            <button id="filterButton" class="filter-btn">Filter</button>
+        </div>
+    </section>
+     <!-- Table Header Section -->
+     <section class="table-header-section">
+      <div class="table-header-container">
+          <h2>DDoS Logs</h2>
+          <button class="refresh-button">Refresh</button>
+      </div>
+  </section>
+  <!-- Table Section -->
+  <section class="table-section">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>IPV4</th>
+                    <th>Data/Hora</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                    <th>User Agent</th>
+                    <th>country</th>
+                    <th>WAF</th>
+                    <th>Traffic</th>
+                    <th>SIZE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table content will be dynamically populated -->
+            </tbody>
+        </table>
+    </div>
+</section>
+      
+    </main>
+  </div>
+  
+  <script  src="js/script.js"></script>
+  <script  src="js/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    window.onload = function() {
+      // Tenta resetar o zoom
+      document.body.style.zoom = 1.0;
+      
+      // Para navegadores que não suportam zoom via CSS
+      if (window.devicePixelRatio !== 1) {
+        var body = document.getElementsByTagName('body')[0];
+        body.style.webkitTransform = 'scale(1)';
+        body.style.mozTransform = 'scale(1)';
+        body.style.msTransform = 'scale(1)';
+        body.style.oTransform = 'scale(1)';
+        body.style.transform = 'scale(1)';
+      }
+    }
+  </script>
+</body>
+</html>
