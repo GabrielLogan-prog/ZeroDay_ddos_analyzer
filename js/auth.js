@@ -1,16 +1,14 @@
+
 /**
- * Verifica se o usuário está autenticado e redireciona para a página de login 
- * se necessário.
+ * Verifica se o usuário está autenticado.
  * 
  * @function checkAuthentication
  * @returns {void}
- * @example
- * checkAuthentication();   
  */
 function checkAuthentication() {
     // Recupera o token de autenticação do localStorage
     const authToken = localStorage.getItem('authToken');
-
+    
     // Páginas que requerem autenticação
     const protectedPages = [
         'dashboard.html'
@@ -25,7 +23,7 @@ function checkAuthentication() {
 
     // Se for página protegida e não tiver token, redireciona para login
     if (isProtectedPage && !authToken) {
-
+       
         window.location.href = 'index.html';
         alert('Você precisa estar autenticado para acessar esta página.');
     }
@@ -34,42 +32,19 @@ function checkAuthentication() {
 // Função de login
 const validUser = atob("ZGV2QHRlaWF4LmNvbQ==");
     const validPassword = atob("MTIzNDU2");
-/**
- * Verifica se o usuário está autenticado e redireciona para a página de login 
- * se necessário.
- * 
- * @function checkAuthentication
- * @returns {void}
- * @example
- * checkAuthentication();
- */
-function checkAuthentication() {
-    // Recupera o token de autenticação do localStorage
-    const authToken = localStorage.getItem('authToken');
 
-    // Página atual
-    const currentPage = window.location.pathname.split('/').pop();
 
-    // Verifica se a página atual é protegida
-    const isProtectedPage = protectedPages.includes(currentPage);
-
-    // Se for página protegida e não tiver token, redireciona para login
-    if (isProtectedPage && !authToken) {
-
-        window.location.href = 'index.html';
-        alert('Você precisa estar autenticado para acessar esta página.');
-    }
-}
+    
 
 /**
- * Realiza o login do usuário.
- * 
- * @function login
- * @param {string} username - Nome de usuário.
- * @param {string} password - Senha.
- * @returns {void}
- * @example
- * login('dev@texo.com.br', '123456');
+ * Função para realizar login com username e password
+ *
+ * @param {string} username Usuário
+ * @param {string} password Senha
+ *
+ * Verifica credenciais com as constantes validUser e validPassword,
+ *   e se forem válidas, armazena um token de autenticação no localStorage
+ *   e redireciona para a página de dashboard.
  */
 function login(username, password) {
     // Simulação de verificação de credenciais 
@@ -88,14 +63,7 @@ function login(username, password) {
     }
 }
 
-/**
- * Realiza o logout do usuário.
- * 
- * @function logout
- * @returns {void}
- * @example
- * logout();
- */
+// Função de logout
 function logout() {
     // Remove o token
     localStorage.removeItem('authToken');
@@ -104,14 +72,9 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-/**
- * Adiciona event listeners quando o DOM estiver carregado.
- * 
- * @function
- * @returns {void}
- * @example
- * document.addEventListener('DOMContentLoaded', () => {});
- */
+// Adiciona event listeners quando o DOM estiver carregado
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Verifica autenticação
     checkAuthentication();
